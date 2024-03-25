@@ -32,7 +32,44 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		err = tmpl.ExecuteTemplate(w, "resources.gohtml", nil)
+
+		info := CRDsInfo{
+			SessionID:   "sid",
+			ClusterName: "my-cluster",
+			CRDs: []CRD{
+				{
+					GVK: schema.GroupVersionKind{
+						Group:   "kubedb.com",
+						Version: "v1alpha2",
+						Kind:    "MongoDB",
+					},
+					Scoped: "Namespaced",
+					Bound:  false,
+					Icon:   "https://cdn.appscode.com/k8s/icons/kubedb.com/mongodbs.svg",
+				},
+				{
+					GVK: schema.GroupVersionKind{
+						Group:   "kubedb.com",
+						Version: "v1alpha2",
+						Kind:    "MySQL",
+					},
+					Scoped: "Namespaced",
+					Bound:  true,
+					Icon:   "https://cdn.appscode.com/k8s/icons/kubedb.com/mysqls.svg",
+				},
+				{
+					GVK: schema.GroupVersionKind{
+						Group:   "kubedb.com",
+						Version: "v1alpha2",
+						Kind:    "Postgres",
+					},
+					Scoped: "Namespaced",
+					Bound:  false,
+					Icon:   "https://cdn.appscode.com/k8s/icons/kubedb.com/postgreses.svg",
+				},
+			},
+		}
+		err = tmpl.ExecuteTemplate(w, "resources.gohtml", info)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
