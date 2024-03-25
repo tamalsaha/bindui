@@ -5,7 +5,7 @@ go 1.22.1
 require (
 	github.com/Masterminds/sprig/v3 v3.2.3
 	github.com/gorilla/schema v1.2.1
-	k8s.io/apimachinery v0.29.3
+	k8s.io/apimachinery v0.29.2
 )
 
 require (
