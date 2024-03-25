@@ -81,15 +81,15 @@
       <input type="hidden" id="sessionID" name="sessionID" value="{{.SessionID}}">
       {{$sid := .SessionID}}
       {{ range $idx, $crd := .CRDs}}
-        {{ $gk := list $crd.GVK.Kind $crd.GVK.Group | compact | join "." }}
-        <input type="checkbox" class="is-hidden" id="crd_{{$idx}}" name="crd" value="{{$gk}}" {{if $crd.Bound}} disabled{{end}}>
+        {{ $gr := list $crd.Resource $crd.Group | compact | join "." }}
+        <input type="checkbox" class="is-hidden" id="crd_{{$idx}}" name="crd" value="{{$gr}}" {{if $crd.Bound}} disabled{{end}}>
         <label for="crd_{{$idx}}" class="card p-5">
           <div class="icon">
             <img src="{{$crd.Icon}}"/>
           </div>
-          <h4 class="is-size-4 has-text-centered has-text-weight-semibold is-capitalized">{{$crd.GVK.Kind}}</h4>
+          <h4 class="is-size-4 has-text-centered has-text-weight-semibold is-capitalized">{{$crd.Kind}}</h4>
           <ul class="is-flex is-flex-direction-column is-align-items-center">
-            <li class="list-group-item"><span class="has-text-weight-medium">Group:</span> <span>{{$crd.GVK.Group}}</span></li>
+            <li class="list-group-item"><span class="has-text-weight-medium">Group:</span> <span>{{$crd.Group}}</span></li>
             <li class="list-group-item"><span class="has-text-weight-medium">Scoped:</span> <span>{{$crd.Scoped}}</span></li>
           </ul>
         </label>

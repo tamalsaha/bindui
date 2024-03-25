@@ -6,7 +6,6 @@ import (
 	"github.com/Masterminds/sprig/v3"
 	gs "github.com/gorilla/schema"
 	"html/template"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"log"
 	"net/http"
 )
@@ -15,10 +14,12 @@ import (
 var fs embed.FS
 
 type CRD struct {
-	GVK    schema.GroupVersionKind
-	Scoped string
-	Bound  bool
-	Icon   string
+	Group    string
+	Resource string
+	Kind     string
+	Scoped   string
+	Bound    bool
+	Icon     string
 }
 
 type CRDsInfo struct {
@@ -55,34 +56,28 @@ func main() {
 			ClusterName: "my-cluster",
 			CRDs: []CRD{
 				{
-					GVK: schema.GroupVersionKind{
-						Group:   "kubedb.com",
-						Version: "v1alpha2",
-						Kind:    "MongoDB",
-					},
-					Scoped: "Namespaced",
-					Bound:  false,
-					Icon:   "https://cdn.appscode.com/k8s/icons/kubedb.com/mongodbs.svg",
+					Group:    "kubedb.com",
+					Resource: "mongodbs",
+					Kind:     "MongoDB",
+					Scoped:   "Namespaced",
+					Bound:    false,
+					Icon:     "https://cdn.appscode.com/k8s/icons/kubedb.com/mongodbs.svg",
 				},
 				{
-					GVK: schema.GroupVersionKind{
-						Group:   "kubedb.com",
-						Version: "v1alpha2",
-						Kind:    "MySQL",
-					},
-					Scoped: "Namespaced",
-					Bound:  true,
-					Icon:   "https://cdn.appscode.com/k8s/icons/kubedb.com/mysqls.svg",
+					Group:    "kubedb.com",
+					Resource: "mysqls",
+					Kind:     "MySQL",
+					Scoped:   "Namespaced",
+					Bound:    true,
+					Icon:     "https://cdn.appscode.com/k8s/icons/kubedb.com/mysqls.svg",
 				},
 				{
-					GVK: schema.GroupVersionKind{
-						Group:   "kubedb.com",
-						Version: "v1alpha2",
-						Kind:    "Postgres",
-					},
-					Scoped: "Namespaced",
-					Bound:  false,
-					Icon:   "https://cdn.appscode.com/k8s/icons/kubedb.com/postgreses.svg",
+					Group:    "kubedb.com",
+					Resource: "postgreses",
+					Kind:     "Postgres",
+					Scoped:   "Namespaced",
+					Bound:    false,
+					Icon:     "https://cdn.appscode.com/k8s/icons/kubedb.com/postgreses.svg",
 				},
 			},
 		}
