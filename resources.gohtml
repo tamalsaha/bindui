@@ -80,9 +80,10 @@
     <div class="form-inner">
       <input type="hidden" id="sessionID" name="sessionID" value="{{.SessionID}}">
       {{$sid := .SessionID}}
-      {{ range $crd := .CRDs}}
-        <input type="checkbox" class="is-hidden" id="{{$crd.GVK.Kind}}" name="{{$crd.GVK.Kind}}" {{if $crd.Bound}} disabled{{end}}>
-        <label for="{{$crd.GVK.Kind}}" class="card p-5">
+      {{ range $idx, $crd := .CRDs}}
+        {{ $gk := list $crd.GVK.Kind $crd.GVK.Group | compact | join "." }}
+        <input type="checkbox" class="is-hidden" id="crd_{{$idx}}" name="crd" value="{{$gk}}" {{if $crd.Bound}} disabled{{end}}>
+        <label for="crd_{{$idx}}" class="card p-5">
           <div class="icon">
             <img src="{{$crd.Icon}}"/>
           </div>

@@ -3,7 +3,8 @@ package main
 import (
 	"embed"
 	"fmt"
-	"html"
+	"github.com/Masterminds/sprig/v3"
+	gs "github.com/gorilla/schema"
 	"html/template"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"log"
@@ -25,9 +26,21 @@ type CRDsInfo struct {
 	CRDs                   []CRD
 }
 
+/*
+sessionID: sid
+crd: MongoDB.kubedb.com
+crd: Postgres.kubedb.com
+*/
+type BindForm struct {
+	SessionID string   `schema:"sessionID"`
+	GK        []string `schema:"crd"`
+}
+
+var decoder = gs.NewDecoder()
+
 func main() {
 	http.HandleFunc("GET /bind", func(w http.ResponseWriter, r *http.Request) {
-		tmpl, err := template.ParseFS(fs, "*.gohtml")
+		tmpl, err := template.New("base").Funcs(sprig.HtmlFuncMap()).ParseFS(fs, "*.gohtml")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -77,7 +90,23 @@ func main() {
 	})
 
 	http.HandleFunc("POST /bind", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+		err := r.ParseForm()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		var form BindForm
+
+		// r.PostForm is a map of our POST form values
+		err = decoder.Decode(&form, r.PostForm)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		// Do something with person.Name or person.Phone
+		fmt.Fprintf(w, "Hello, %+v", form)
 	})
 
 	log.Println("listening on port 8080")
