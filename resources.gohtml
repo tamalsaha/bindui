@@ -84,7 +84,7 @@
         <input type="checkbox" class="is-hidden" id="{{$crd.GVK.Kind}}" name="{{$crd.GVK.Kind}}" {{if $crd.Bound}} disabled{{end}}>
         <label for="{{$crd.GVK.Kind}}" class="card p-5">
           <div class="icon">
-            <img src="https://kubedb.com/assets/images/databases/logos/{{$crd.GVK.Kind}}.svg"/>
+            <img src="{{$crd.Icon}}"/>
           </div>
           <h4 class="is-size-4 has-text-centered has-text-weight-semibold is-capitalized">{{$crd.GVK.Kind}}</h4>
           <ul class="is-flex is-flex-direction-column is-align-items-center">
