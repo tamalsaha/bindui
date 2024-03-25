@@ -106,7 +106,7 @@ func main() {
 		}
 
 		// Do something with person.Name or person.Phone
-		fmt.Fprintf(w, "Hello, %+v", form)
+		fmt.Fprintf(w, "FORM: %+v", form)
 	})
 
 	log.Println("listening on port 8080")
