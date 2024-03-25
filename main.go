@@ -40,11 +40,15 @@ var decoder = gs.NewDecoder()
 
 func main() {
 	http.HandleFunc("GET /bind", func(w http.ResponseWriter, r *http.Request) {
-		tmpl, err := template.New("base").Funcs(sprig.HtmlFuncMap()).ParseFS(fs, "*.gohtml")
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+		//tmpl, err := template.New("base").Funcs(sprig.HtmlFuncMap()).ParseFS(fs, "*.gohtml")
+		//if err != nil {
+		//	http.Error(w, err.Error(), http.StatusInternalServerError)
+		//	return
+		//}
+
+		var resourcesTemplate = template.Must(template.New("resources.gohtml").
+			Funcs(sprig.HtmlFuncMap()).
+			ParseFS(fs, "*"))
 
 		info := CRDsInfo{
 			SessionID:   "sid",
@@ -82,7 +86,7 @@ func main() {
 				},
 			},
 		}
-		err = tmpl.ExecuteTemplate(w, "resources.gohtml", info)
+		err := resourcesTemplate.Execute(w, info)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
