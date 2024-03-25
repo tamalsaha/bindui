@@ -101,7 +101,6 @@ func main() {
 		}
 
 		var form BindForm
-
 		// r.PostForm is a map of our POST form values
 		err = decoder.Decode(&form, r.PostForm)
 		if err != nil {
