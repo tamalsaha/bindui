@@ -34,7 +34,7 @@ crd: Postgres.kubedb.com
 */
 type BindForm struct {
 	SessionID string   `schema:"sessionID"`
-	GR        []string `schema:"crd"`
+	GRs       []string `schema:"crd"`
 }
 
 var decoder = gs.NewDecoder()
